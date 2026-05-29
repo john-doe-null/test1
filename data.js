@@ -598,7 +598,7 @@ function openUploadSheet(type) {
     document.getElementById('exampleRow2').style.display = 'none';
 
     document.getElementById('cameraPreviewBar').classList.remove('show');
-    document.getElementById('historyView').classList.remove('show');
+
     var overlay = document.getElementById('uploadSheetOverlay');
     overlay.style.display = 'block';
     overlay.offsetHeight;
@@ -620,8 +620,7 @@ function switchHxSheetTab(tab) {
     } else if (tab === 'search') {
         hxNext.style.display = uploadedImageData ? 'block' : 'none';
     }
-    // 隐藏历史记录视图，回到上传主界面
-    document.getElementById('historyView').classList.remove('show');
+
 }
 
 function getNextBtn() {
@@ -985,81 +984,6 @@ function saveDesignToHistory() {
     });
 }
 
-function showHistory() {
-    const history = getHistory();
-    const view = document.getElementById('historyView');
-    const empty = document.getElementById('historyEmpty');
-    const list = document.getElementById('historyList');
-    document.getElementById('exampleRow1').style.display = 'none';
-    document.getElementById('exampleRow2').style.display = 'none';
-    document.getElementById('hxSearchBar').style.display = 'none';
-    document.getElementById('hxCommunityGrid').classList.remove('show');
-    document.getElementById('efStyleSelectGrid').style.display = 'none';
-    document.getElementById('uploadActions').style.display = 'none';
-    document.getElementById('hxSheetSearchContent').classList.remove('show');
-    document.getElementById('hxSheetUploadContent').classList.remove('show');
-    getNextBtn().style.display = 'none';
-    document.getElementById('btnUploadNextOther').style.display = 'none';
-    document.getElementById('cameraPreviewBar').classList.remove('show');
-    view.classList.add('show');
-    if (history.length === 0) {
-        empty.style.display = 'block'; list.innerHTML = '';
-    } else {
-        empty.style.display = 'none';
-        list.innerHTML = history.map((item, i) => `
-            <div class="history-item" onclick="useHistoryItem(${i})">
-                <img class="thumb" src="${item.dataUrl}" />
-                <div class="info"><div class="htype">${item.type}</div><div class="hdate">${item.date}</div></div>
-                <button class="del-btn" onclick="deleteHistoryItem(event, ${i})">✕</button>
-            </div>`).join('');
-    }
-}
-
-function showUploadMain() {
-    document.getElementById('historyView').classList.remove('show');
-    var type = currentUploadType;
-    var isHuxing = (type === '户型图');
-    document.getElementById('exampleRow1').style.display = 'none';
-    document.getElementById('exampleRow2').style.display = 'none';
-    if (isHuxing) {
-        // 恢复户型图tab结构
-        document.getElementById('hxSheetTabs').style.display = 'flex';
-        document.getElementById('hxSearchBar').style.display = 'flex';
-        document.getElementById('hxCommunityGrid').classList.add('show');
-        document.getElementById('uploadActions').style.display = 'none';
-        document.getElementById('btnUploadNextOther').style.display = 'none';
-        document.getElementById('hxSheetSearchContent').classList.toggle('show', hxSheetCurrentTab === 'search');
-        document.getElementById('hxSheetUploadContent').classList.toggle('show', hxSheetCurrentTab === 'upload');
-        if (uploadedImageData) {
-            getNextBtn().style.display = 'block';
-        }
-    } else {
-        document.getElementById('hxSheetTabs').style.display = 'none';
-        document.getElementById('hxSheetSearchContent').classList.remove('show');
-        document.getElementById('hxSheetUploadContent').classList.remove('show');
-        document.getElementById('hxSearchBar').style.display = 'none';
-        document.getElementById('hxCommunityGrid').classList.remove('show');
-        document.getElementById('uploadActions').style.display = 'flex';
-        document.getElementById('efStyleSelectGrid').style.display = (type === '效果图') ? 'grid' : 'none';
-        if (uploadedImageData) {
-            document.getElementById('cameraPreviewBar').classList.add('show');
-            getNextBtn().style.display = 'block';
-        }
-    }
-}
-
-function useHistoryItem(index) {
-    const history = getHistory(); const item = history[index];
-    if (!item) return;
-    uploadedImageData = item.dataUrl; currentUploadType = item.type;
-    closeUploadSheet(); showOnHomeButton();
-}
-function deleteHistoryItem(event, index) {
-    event.stopPropagation();
-    const history = getHistory(); history.splice(index, 1);
-    try { localStorage.setItem('upload_history', JSON.stringify(history)); } catch (e) { /* ignore */ }
-    showHistory();
-}
 
 // ============ 户型图页 风格选择 ============
 function selectHxStyle(el, styleName) {

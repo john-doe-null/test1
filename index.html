@@ -1519,7 +1519,7 @@
         <!-- Tab2: AI工具 -->
         <div class="soft-tab-panel" id="softPanelTools">
             <div class="soft-mode-tabs">
-                <button class="soft-mode-tab active" onclick="switchSoftMainTool('recognize')">🔍 识别换搭</button>
+                <button class="soft-mode-tab active" onclick="switchSoftMainTool('recognize')">🔍 圈选换搭</button>
                 <button class="soft-mode-tab" onclick="switchSoftMainTool('draw')">🖌️ 涂抹换搭</button>
                 <button class="soft-mode-tab" onclick="switchSoftMainTool('command')">💬 指令换搭</button>
                 <button class="soft-mode-tab" onclick="switchSoftMainTool('erase')">🗑 物品消除</button>
@@ -1689,6 +1689,16 @@
                 <span class="mine-menu-text">设计方案共创</span>
                 <span class="mine-menu-arrow">›</span>
             </div>
+            <div class="mine-menu-item" onclick="navigateTo('page-design-coop');">
+                <span class="mine-menu-icon">🤝</span>
+                <span class="mine-menu-text">设计共创</span>
+                <span class="mine-menu-arrow">›</span>
+            </div>
+            <div class="mine-menu-item" onclick="navigateTo('page-soft-checklist');">
+                <span class="mine-menu-icon">📋</span>
+                <span class="mine-menu-text">软装选配清单</span>
+                <span class="mine-menu-arrow">›</span>
+            </div>
         </div>
     </div>
 
@@ -1817,6 +1827,26 @@
         </div>
     </div>
 
+    <!-- ========== 设计共创页 ========== -->
+    <div id="page-design-coop" class="page">
+        <div class="nav-header">
+            <div class="back-btn" onclick="goBack()">←</div>
+            <div class="nav-title">设计共创</div>
+        </div>
+        <p class="page-subtitle">与设计师一起共创你的家居方案</p>
+        <div style="flex:1;display:flex;align-items:center;justify-content:center;color:#94a3b8;font-size:14px;">功能开发中，敬请期待...</div>
+    </div>
+
+    <!-- ========== 软装选配清单页 ========== -->
+    <div id="page-soft-checklist" class="page">
+        <div class="nav-header">
+            <div class="back-btn" onclick="goBack()">←</div>
+            <div class="nav-title">软装选配清单</div>
+        </div>
+        <p class="page-subtitle">管理你的软装家具选配方案</p>
+        <div style="flex:1;display:flex;align-items:center;justify-content:center;color:#94a3b8;font-size:14px;">功能开发中，敬请期待...</div>
+    </div>
+
     <!-- ========== 上传底部面板 ========== -->
     <div class="sheet-overlay" id="uploadSheetOverlay" onclick="closeUploadSheet()">
         <div class="upload-sheet" id="uploadSheet" onclick="event.stopPropagation()">
@@ -1843,7 +1873,6 @@
                     <button class="bar-clear" onclick="clearCameraPreview(event)">✕</button>
                 </div>
                 <div class="upload-actions" id="hxUploadActions">
-                    <button class="upload-action-btn recent" onclick="showHistory()"><span class="action-icon">🕐</span>最近上传</button>
                     <button class="upload-action-btn gallery" onclick="triggerFilePicker()"><span class="action-icon">🖼️</span>相册</button>
                 </div>
             </div>
@@ -1854,18 +1883,12 @@
             <div class="example-row" id="exampleRow1"></div>
             <div class="example-row" id="exampleRow2"></div>
             <div class="upload-actions" id="uploadActions">
-                <button class="upload-action-btn recent" id="btnRecent" onclick="showHistory()"><span class="action-icon">🕐</span>最近上传</button>
+
                 <button class="upload-action-btn camera" id="btnCamera" onclick="triggerCamera()"><span class="action-icon">📷</span>拍照</button>
                 <button class="upload-action-btn gallery" id="btnGallery" onclick="triggerFilePicker()"><span class="action-icon">🖼️</span>相册</button>
             </div>
             <button class="upload-action-btn done" id="btnUploadNextOther" onclick="goNextAfterUpload()" style="display:none;background:linear-gradient(135deg,var(--primary),var(--primary-dark));">下一步，开始设计 →</button>
-            <div class="history-view" id="historyView">
-                <div class="history-header">
-                    <button class="history-back-btn" onclick="showUploadMain()">←</button><span class="history-title">最近上传</span>
-                </div>
-                <div class="history-empty" id="historyEmpty"><div class="empty-icon">📭</div><div class="empty-text">暂无上传记录</div></div>
-                <div id="historyList"></div>
-            </div>
+
         </div>
     </div>
     <input type="file" id="hiddenFileInput" accept="image/*" style="display:none;" onchange="handleFileSelect(event)" />
